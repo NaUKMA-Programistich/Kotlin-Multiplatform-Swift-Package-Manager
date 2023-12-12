@@ -17,11 +17,14 @@ swiftPackage {
 
 After that, XCode auto rebuild spm(xcframework) before run app
 
+* In Xcode code we can use TestSPMFramework
+
 ### Macos
 * If we configure MacOS in KotlinMultiplatformPlugin, we can add ```macos("10_15")``` and auto generate new platform in xcframework
 
 
 ### TODO
+* Linter
 * Dependencies in SPM + Commonizer + check support ios/macos
 * Graph Dependencies problem
 * Generate workspace with prebuild phase

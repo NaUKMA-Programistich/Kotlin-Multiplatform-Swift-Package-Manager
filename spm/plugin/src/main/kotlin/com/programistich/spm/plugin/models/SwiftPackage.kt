@@ -28,9 +28,6 @@ let package = Package(
             targets: ["$packageName", "$frameworkName"]
         ),
     ],
-    dependencies: [
-        ${dependencies.joinToString(separator = ", ") { it.generateContentDeps() }}
-    ],
     targets: [
         .binaryTarget(
             name: "$frameworkName",
@@ -38,9 +35,7 @@ let package = Package(
         ),
         .target(
             name: "$packageName",
-            dependencies: [
-                ${dependencies.joinToString(separator = ", ") { it.generateContentTarget() }}
-            ]
+            dependencies: []
         ),
     ]
 )""".trimIndent()
