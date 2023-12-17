@@ -2,6 +2,7 @@ package com.programistich.spm.plugin.tasks
 
 import com.programistich.spm.plugin.KotlinMultiplatformSwiftPackageExtension
 import com.programistich.spm.plugin.KotlinMultiplatformSwiftPackagePlugin
+import com.programistich.spm.plugin.deps.ProcessDependencies
 import com.programistich.spm.plugin.models.BuildType
 import com.programistich.spm.plugin.models.SwiftPackage
 import com.programistich.spm.plugin.models.SwiftPackageException
@@ -26,6 +27,7 @@ internal fun Project.registerCreateSPM(
             project.generateSPMBuildFolder(swiftPackage)
             project.generatePreBuildScript(swiftPackage)
             project.validateSwiftPackage(swiftPackage)
+            project.downloadDependencies(swiftPackage)
         }
     }
 }
@@ -35,7 +37,7 @@ private fun Project.createSPM(spmExtension: KotlinMultiplatformSwiftPackageExten
 
     val packageName = spmExtension.packageName ?: throw SwiftPackageException("Package name is null")
     val swiftVersion = spmExtension.swiftVersion ?: throw SwiftPackageException("Swift version is null")
-    val iosVersion = spmExtension.iosVersion ?: throw SwiftPackageException("iOs version is null")
+    val iosVersion = spmExtension.iosVersion ?: throw SwiftPackageException("iOS version is null")
     val dependencies = spmExtension.dependencies
     val frameworkName = packageName + KotlinMultiplatformSwiftPackagePlugin.PREFIX_FRAMEWORK
 

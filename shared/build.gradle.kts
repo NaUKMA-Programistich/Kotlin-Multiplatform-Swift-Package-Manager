@@ -60,4 +60,9 @@ swiftPackage {
     swift(5.3)
     ios("13")
     macos("10_15")
+
+    dependencies {
+        version("3.3.0", "https://github.com/airbnb/lottie-ios.git")
+        url("https://github.com/facebook/facebook-ios-sdk")
+    }
 }

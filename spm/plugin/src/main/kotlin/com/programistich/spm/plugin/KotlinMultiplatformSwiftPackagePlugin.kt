@@ -13,8 +13,8 @@ class KotlinMultiplatformSwiftPackagePlugin : Plugin<Project> {
     companion object {
         internal const val GRADLE_DSL = "swiftPackage"
         internal const val PREFIX_FRAMEWORK = "Framework"
-        internal const val SPM_TASK_NAME = "createSPM"
         internal const val FOLDER = "spm"
+        internal const val DEPENDENCIES = "deps"
         internal const val BUILD_FILE = "build.sh"
     }
 
