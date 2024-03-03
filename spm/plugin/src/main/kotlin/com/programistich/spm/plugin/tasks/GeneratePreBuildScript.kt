@@ -1,18 +1,16 @@
 package com.programistich.spm.plugin.tasks
 
-import com.programistich.spm.plugin.KotlinMultiplatformSwiftPackagePlugin
-import com.programistich.spm.plugin.models.BuildType
-import com.programistich.spm.plugin.models.SwiftPackage
+import com.programistich.spm.plugin.utils.SwiftPackageConstants
 import org.gradle.api.Project
 import java.io.File
 
-internal fun Project.generatePreBuildScript(swiftPackage: SwiftPackage) {
-    val spmBuildFolder = File(project.buildDir, KotlinMultiplatformSwiftPackagePlugin.FOLDER)
+internal fun Project.generatePreBuildScript() {
+    val spmBuildFolder = File(project.buildDir, SwiftPackageConstants.FOLDER)
     if (!spmBuildFolder.exists()) {
         spmBuildFolder.mkdirs()
     }
 
-    val spmScriptFile = File(spmBuildFolder, KotlinMultiplatformSwiftPackagePlugin.BUILD_FILE)
+    val spmScriptFile = File(spmBuildFolder, SwiftPackageConstants.BUILD_FILE)
     if (!spmScriptFile.exists()) {
         spmScriptFile.createNewFile()
     }
@@ -45,8 +43,7 @@ private fun generateContent(
     val gradleTaskSh = "$" + "GRADLE_TASK"
     val configuration = "$" + "CONFIGURATION"
 
-
-    return  """
+    return """
         #!/usr/bin/env sh
         
         # Add this script in pre build phase

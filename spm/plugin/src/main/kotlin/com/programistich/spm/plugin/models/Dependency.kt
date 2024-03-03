@@ -1,54 +1,46 @@
 package com.programistich.spm.plugin.models
 
+import java.net.URL
+
 sealed interface Dependency {
-    data class Default(val url: String): Dependency
+    sealed class Github(private val url: String) {
+        data class Default(val url: String) : Dependency, Github(url)
+        data class Version(val url: String, val version: String) : Dependency, Github(url)
+        data class Branch(val url: String, val branch: String) : Dependency, Github(url)
 
-    data class Version(val url: String, val version: String): Dependency
-    data class Branch(val url: String, val branch: String): Dependency
-    data class Path(val path: String): Dependency
-
-    private fun getGithubData(url: String): Pair<String, String> {
-        val splits = url.split("/")
-        val size = splits.size
-
-        val username = splits[size - 2]
-        val repo = splits[size - 1].replace(".git", "")
-        return username to repo
-    }
-
-    fun getGithubUrl(): String {
-        return when (this) {
-            is Default -> {
-                val (username, repo) = getGithubData(url)
-                "https://api.github.com/repos/$username/$repo/zipball"
-            }
-
-            is Branch -> {
-                val (username, repo) = getGithubData(url)
-                "https://api.github.com/repos/$username/$repo/zipball/$branch"
-            }
-
-            is Version -> {
-                val (username, repo) = getGithubData(url)
-                "https://api.github.com/repos/$username/$repo/zipball/$version"
-            }
-
-            is Path -> throw RuntimeException("Deps by path can not get github url")
+        val githubData by lazy {
+            val url = URL(this.url)
+            val parts = url.path.split("/")
+            val organization = parts[1]
+            val repository = parts[2].replace(".git", "")
+            GithubData(organization, repository)
         }
     }
+
+    data class Path(val path: String) : Dependency
+
+    val name: String
+        get() = when (this) {
+            is Github -> this.githubData.repository.substringAfterLast("/")
+            is Path -> this.path.substringAfterLast("/")
+        }
 }
 
+data class GithubData(
+    val organization: String,
+    val repository: String,
+)
 
 class DependencyListBuilder {
     private val dependencies = mutableListOf<Dependency>()
 
     fun version(version: String, git: String) {
-        val dependency: Dependency = Dependency.Version(git, version)
+        val dependency: Dependency = Dependency.Github.Version(git, version)
         dependencies.add(dependency)
     }
 
     fun branch(branch: String, git: String) {
-        val dependency: Dependency = Dependency.Branch(git, branch)
+        val dependency: Dependency = Dependency.Github.Branch(git, branch)
         dependencies.add(dependency)
     }
 
@@ -58,7 +50,7 @@ class DependencyListBuilder {
     }
 
     fun url(path: String) {
-        val dependency: Dependency = Dependency.Default(path)
+        val dependency: Dependency = Dependency.Github.Default(path)
         dependencies.add(dependency)
     }
 

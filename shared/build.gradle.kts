@@ -4,8 +4,9 @@ plugins {
     id("kotlin-multiplatform-spm")
 }
 
-@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    androidTarget()
+
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -13,37 +14,30 @@ kotlin {
     macosArm64()
     macosX64()
 
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
-
     sourceSets {
+        @Suppress("UnusedPrivateProperty")
         val commonMain by getting {
             dependencies {
                 implementation("co.touchlab:kermit:1.2.2")
             }
         }
-        val iosMain by creating
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-
-        iosMain.dependsOn(commonMain)
-        iosX64Main.dependsOn(iosMain)
-        iosArm64Main.dependsOn(iosMain)
-        iosSimulatorArm64Main.dependsOn(iosMain)
-
-        val macosMain by creating
-        val macosX64Main by getting
-        val macosArm64Main by getting
-
-        macosMain.dependsOn(commonMain)
-        macosX64Main.dependsOn(macosMain)
-        macosArm64Main.dependsOn(macosMain)
+//        val iosMain by creating
+//        val iosX64Main by getting
+//        val iosArm64Main by getting
+//        val iosSimulatorArm64Main by getting
+//
+//        iosMain.dependsOn(commonMain)
+//        iosX64Main.dependsOn(iosMain)
+//        iosArm64Main.dependsOn(iosMain)
+//        iosSimulatorArm64Main.dependsOn(iosMain)
+//
+//        val macosMain by creating
+//        val macosX64Main by getting
+//        val macosArm64Main by getting
+//
+//        macosMain.dependsOn(commonMain)
+//        macosX64Main.dependsOn(macosMain)
+//        macosArm64Main.dependsOn(macosMain)
     }
 }
 
@@ -64,5 +58,8 @@ swiftPackage {
     dependencies {
         version("3.3.0", "https://github.com/airbnb/lottie-ios.git")
         url("https://github.com/facebook/facebook-ios-sdk")
+        url("https://github.com/apple/swift-log")
+        url("https://github.com/realm/realm-swift.git")
+        branch("main", "https://github.com/gonzalezreal/swift-markdown-ui")
     }
 }

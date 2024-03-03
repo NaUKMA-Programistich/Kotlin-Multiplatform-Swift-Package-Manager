@@ -2,9 +2,8 @@ package com.programistich.spm.plugin
 
 import com.programistich.spm.plugin.models.Dependency
 import com.programistich.spm.plugin.models.DependencyListBuilder
-import com.programistich.spm.plugin.models.SwiftPackage
+import com.programistich.spm.plugin.utils.SwiftPackageConstants
 import org.gradle.api.Project
-
 
 open class KotlinMultiplatformSwiftPackageExtension(private val project: Project) {
     internal var packageName: String? = null
@@ -13,6 +12,10 @@ open class KotlinMultiplatformSwiftPackageExtension(private val project: Project
     internal var macosVersion: String? = null
 
     internal var dependencies: List<Dependency> = emptyList()
+
+    fun getFrameworkName(): String {
+        return packageName + SwiftPackageConstants.PREFIX_FRAMEWORK
+    }
 
     fun packageName(packageName: String) {
         this.packageName = packageName
@@ -37,6 +40,7 @@ open class KotlinMultiplatformSwiftPackageExtension(private val project: Project
     }
 
     override fun toString(): String {
-        return "(packageName=$packageName, swiftVersion=$swiftVersion, iosVersion=$iosVersion, dependencies=$dependencies)"
+        return "(packageName=$packageName, swiftVersion=$swiftVersion," +
+            "iosVersion=$iosVersion, dependencies=$dependencies)"
     }
 }

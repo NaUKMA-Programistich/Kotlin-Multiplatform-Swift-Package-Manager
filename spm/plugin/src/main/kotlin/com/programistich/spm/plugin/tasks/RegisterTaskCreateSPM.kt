@@ -1,17 +1,15 @@
 package com.programistich.spm.plugin.tasks
 
 import com.programistich.spm.plugin.KotlinMultiplatformSwiftPackageExtension
-import com.programistich.spm.plugin.KotlinMultiplatformSwiftPackagePlugin
-import com.programistich.spm.plugin.deps.ProcessDependencies
 import com.programistich.spm.plugin.models.BuildType
-import com.programistich.spm.plugin.models.SwiftPackage
-import com.programistich.spm.plugin.models.SwiftPackageException
+import com.programistich.spm.plugin.utils.SwiftPackageConstants
 import org.gradle.api.Project
-
-private const val PROP_TYPE_RELEASE = "buildType"
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun Project.registerCreateSPM(
-    spmExtension: KotlinMultiplatformSwiftPackageExtension, frameworkName: String
+    spmExtension: KotlinMultiplatformSwiftPackageExtension,
+    frameworkName: String,
+    kmmExtension: KotlinMultiplatformExtension
 ) {
     val project = this
     tasks.register("createSPM") {
@@ -22,41 +20,27 @@ internal fun Project.registerCreateSPM(
         }
 
         doLast {
-            val swiftPackage = createSPM(spmExtension)
+            project.checkMacosTarget(spmExtension, kmmExtension)
 
+            // SPM Tools
+            project.downloadSwiftPackageTools()
+            project.generateSwiftPackageToolsParser()
+
+            // Work with dependencies
+            project.downloadDependencies(dependencies = spmExtension.dependencies)
+            project.parseDependencies()
+
+            val swiftPackage = project.createSwiftPackageModel(spmExtension, frameworkName)
             project.generateSPMBuildFolder(swiftPackage)
-            project.generatePreBuildScript(swiftPackage)
-            project.validateSwiftPackage(swiftPackage)
-            project.downloadDependencies(swiftPackage)
+            project.generatePreBuildScript()
+
+            // Validate Swift Package
+            project.validateSwiftPackage()
         }
     }
 }
 
-private fun Project.createSPM(spmExtension: KotlinMultiplatformSwiftPackageExtension): SwiftPackage {
-    val buildType = this.getBuildType()
-
-    val packageName = spmExtension.packageName ?: throw SwiftPackageException("Package name is null")
-    val swiftVersion = spmExtension.swiftVersion ?: throw SwiftPackageException("Swift version is null")
-    val iosVersion = spmExtension.iosVersion ?: throw SwiftPackageException("iOS version is null")
-    val dependencies = spmExtension.dependencies
-    val frameworkName = packageName + KotlinMultiplatformSwiftPackagePlugin.PREFIX_FRAMEWORK
-
-    val xcFrameworkTypeBuild = buildType.getPath()
-    val xcFrameworkPath = "../XCFrameworks/$xcFrameworkTypeBuild/${frameworkName}.xcframework"
-
-    return SwiftPackage(
-        packageName = packageName,
-        swiftVersion = swiftVersion,
-        iosVersion = iosVersion,
-        dependencies = dependencies,
-        frameworkName = frameworkName,
-        buildType = buildType,
-        xcFrameworkPath = xcFrameworkPath,
-        macosVersion = spmExtension.macosVersion
-    )
-}
-
 internal fun Project.getBuildType(): BuildType {
-    val rawBuildType: String? = project.findProperty(PROP_TYPE_RELEASE) as String?
+    val rawBuildType: String? = project.findProperty(SwiftPackageConstants.PROP_TYPE_BUILD) as String?
     return BuildType.fromString(rawBuildType) ?: BuildType.RELEASE
 }

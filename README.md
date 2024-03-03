@@ -9,6 +9,14 @@ swiftPackage {
     packageName("TestSPM")
     swift(5.3)
     ios("13")
+
+    dependencies {
+        version("3.3.0", "https://github.com/airbnb/lottie-ios.git")
+        url("https://github.com/facebook/facebook-ios-sdk")
+        url("https://github.com/apple/swift-log")
+        url("https://github.com/realm/realm-swift.git")
+        branch("main", "https://github.com/gonzalezreal/swift-markdown-ui")
+    }
 }
 ```
 * Run ```gradlew createSPM``` what generate first SPM folder in build/spm
@@ -24,7 +32,5 @@ After that, XCode auto rebuild spm(xcframework) before run app
 
 
 ### TODO
-* Linter
-* Dependencies in SPM + Commonizer + check support ios/macos
+* Commonizer
 * Graph Dependencies problem
-* Generate workspace with prebuild phase
