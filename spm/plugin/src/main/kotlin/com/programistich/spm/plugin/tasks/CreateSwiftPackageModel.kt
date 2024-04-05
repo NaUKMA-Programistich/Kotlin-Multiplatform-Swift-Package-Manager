@@ -14,7 +14,7 @@ internal fun Project.createSwiftPackageModel(
     val buildType = getBuildType()
     val xcFrameworkTypeBuild = buildType.getPath()
 
-    val xcFrameworkPath = "../XCFrameworks/$xcFrameworkTypeBuild/${frameworkName}.xcframework"
+    val xcFrameworkPath = "../XCFrameworks/$xcFrameworkTypeBuild/$frameworkName.xcframework"
 
     val dependencies = DependencyStorage.getAllParser().map { (dependency, parser) ->
         SwiftPackageDependency(dependency, parser)

@@ -4,6 +4,7 @@ plugins {
     `kotlin-dsl`
     kotlin("plugin.serialization").version("1.8.10")
     id("io.gitlab.arturbosch.detekt").version("1.23.4")
+    id("maven-publish")
 }
 
 dependencies {
@@ -60,4 +61,17 @@ tasks.withType<Detekt> {
 
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.4")
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["java"])
+                groupId = "com.programistich"
+                artifactId = "spm-plugin"
+                version = "0.0.1"
+            }
+        }
+    }
 }

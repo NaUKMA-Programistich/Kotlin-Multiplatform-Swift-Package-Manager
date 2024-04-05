@@ -51,15 +51,16 @@ android {
 
 swiftPackage {
     packageName("TestSPM")
-    swift(5.3)
-    ios("13")
+    swift(5.6)
+    ios("15")
     macos("10_15")
 
     dependencies {
-        version("3.3.0", "https://github.com/airbnb/lottie-ios.git")
+//        version("3.3.0", "https://github.com/airbnb/lottie-ios.git")
         url("https://github.com/facebook/facebook-ios-sdk")
-        url("https://github.com/apple/swift-log")
-        url("https://github.com/realm/realm-swift.git")
-        branch("main", "https://github.com/gonzalezreal/swift-markdown-ui")
+//        url("https://github.com/apple/swift-log")
+//        url("https://github.com/realm/realm-swift.git")
+//        url("https://github.com/NaUKMA-Programistich/OAuthFramework.git")
+//        branch("main", "https://github.com/gonzalezreal/swift-markdown-ui")
     }
 }

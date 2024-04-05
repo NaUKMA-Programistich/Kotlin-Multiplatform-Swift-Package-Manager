@@ -25,8 +25,8 @@ internal fun Project.generatePreBuildScript() {
     val subprojectPath = diffPath.replace("/", ":")
 
     val content = generateContent(
-        spmBuildPath = spmScriptFile.absolutePath,
-        rootFilePath = rootFilePath,
+        spmBuildPath = spmScriptFile.absolutePath.replace(" ", "\\ "),
+        rootFilePath = rootFilePath.replace(" ", "\\ "),
         subproject = subprojectPath
     )
 

@@ -20,11 +20,14 @@ class KotlinMultiplatformSwiftPackagePlugin : Plugin<Project> {
             )
 
         project.afterEvaluate {
-            project.extensions.findByType<KotlinMultiplatformExtension>()?.let { kmmExtension ->
-                val frameworkName = spmExtension.packageName + PREFIX_FRAMEWORK
-                project.generateXCFramework(kmmExtension, frameworkName)
-                project.registerCreateSPM(spmExtension, frameworkName, kmmExtension)
-            }
+            val kmmExtension = project.findKotlinMultiplatformExtension() ?: return@afterEvaluate
+            val frameworkName = spmExtension.packageName + PREFIX_FRAMEWORK
+            project.generateXCFramework(kmmExtension, frameworkName)
+            project.registerCreateSPM(spmExtension, frameworkName, kmmExtension)
         }
     }
+}
+
+internal fun Project.findKotlinMultiplatformExtension(): KotlinMultiplatformExtension? {
+    return project.extensions.findByType(KotlinMultiplatformExtension::class.java)
 }
