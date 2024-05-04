@@ -1,6 +1,5 @@
 package com.programistich.kmmspm
 
-import co.touchlab.kermit.Logger
 import platform.Foundation.NSProcessInfo
 
 class MacOSPlatform: Platform {
@@ -8,6 +7,5 @@ class MacOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform {
-    Logger.i { "Hello World macos" }
     return MacOSPlatform()
 }

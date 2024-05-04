@@ -18,7 +18,6 @@ kotlin {
         @Suppress("UnusedPrivateProperty")
         val commonMain by getting {
             dependencies {
-                implementation("co.touchlab:kermit:1.2.2")
             }
         }
 //        val iosMain by creating
@@ -56,11 +55,11 @@ swiftPackage {
     macos("10_15")
 
     dependencies {
-//        version("3.3.0", "https://github.com/airbnb/lottie-ios.git")
+        version("3.3.0", "https://github.com/airbnb/lottie-ios.git")
         url("https://github.com/facebook/facebook-ios-sdk")
-//        url("https://github.com/apple/swift-log")
-//        url("https://github.com/realm/realm-swift.git")
-//        url("https://github.com/NaUKMA-Programistich/OAuthFramework.git")
-//        branch("main", "https://github.com/gonzalezreal/swift-markdown-ui")
+        url("https://github.com/apple/swift-log")
+        url("https://github.com/realm/realm-swift.git")
+        url("https://github.com/NaUKMA-Programistich/OAuthFramework.git")
+        branch("main", "https://github.com/gonzalezreal/swift-markdown-ui")
     }
 }

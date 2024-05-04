@@ -1,6 +1,5 @@
 package com.programistich.kmmspm
 
-import co.touchlab.kermit.Logger
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {
@@ -8,6 +7,5 @@ class IOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform {
-    Logger.i { "Hello World Test adfasdfsff" }
     return IOSPlatform()
 }
