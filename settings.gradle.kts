@@ -15,5 +15,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Kotlin Multiplatform Swift Package Manager"
-include(":shared")
-include(":generator")
+//include(":shared")
+//include(":generator")

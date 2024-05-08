@@ -36,8 +36,6 @@ internal fun Project.registerCreateSPM(
 
             // Validate Swift Package
             project.validateSwiftPackage()
-
-            // project.createCommonizerTask()
         }
     }
 }
