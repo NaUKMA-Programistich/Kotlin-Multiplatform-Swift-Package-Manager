@@ -2,7 +2,6 @@ package com.programistich.spm.plugin
 
 import com.programistich.spm.plugin.models.Dependency
 import com.programistich.spm.plugin.models.DependencyListBuilder
-import com.programistich.spm.plugin.utils.SwiftPackageConstants
 import org.gradle.api.Project
 
 open class KotlinMultiplatformSwiftPackageExtension(private val project: Project) {
@@ -13,10 +12,6 @@ open class KotlinMultiplatformSwiftPackageExtension(private val project: Project
 
     internal var dependencies: List<Dependency> = emptyList()
 
-    fun getFrameworkName(): String {
-        return packageName + SwiftPackageConstants.PREFIX_FRAMEWORK
-    }
-
     fun packageName(packageName: String) {
         this.packageName = packageName
     }
@@ -26,9 +21,7 @@ open class KotlinMultiplatformSwiftPackageExtension(private val project: Project
     }
 
     fun dependencies(block: DependencyListBuilder.() -> Unit) {
-        val builder = DependencyListBuilder()
-        builder.block()
-        this.dependencies = builder.build()
+        this.dependencies = DependencyListBuilder().apply(block).build()
     }
 
     fun ios(version: String) {
@@ -38,7 +31,6 @@ open class KotlinMultiplatformSwiftPackageExtension(private val project: Project
     fun macos(version: String) {
         this.macosVersion = version
     }
-
     override fun toString(): String {
         return "(packageName=$packageName, swiftVersion=$swiftVersion," +
             "iosVersion=$iosVersion, dependencies=$dependencies)"

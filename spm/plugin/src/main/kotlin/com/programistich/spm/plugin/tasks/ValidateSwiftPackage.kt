@@ -8,9 +8,10 @@ import java.io.File
 internal fun Project.validateSwiftPackage() {
     val cli = listOf("bash", "-c", "swift package describe")
 
-    exec {
+    val result = exec {
         workingDir = File(project.buildDir, SwiftPackageConstants.FOLDER)
         commandLine = cli
         standardOutput = ByteArrayOutputStream()
     }
+    check(result.exitValue == 0) { "Swift package validation failed" }
 }

@@ -226,13 +226,13 @@ struct SemVer: Codable {
 
 private fun generateContentForSwiftPackage(path: String): String {
     return """
-// swift-tools-version:5.5
+// swift-tools-version:5.7
 
 import PackageDescription
 
 let package = Package(
     name: "swift-package-tools",
-    platforms: [ .macOS(.v12) ],
+    platforms: [ .macOS(.v13) ],
     dependencies: [
         .package(name: "swift-package-manager", path: "$path"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
