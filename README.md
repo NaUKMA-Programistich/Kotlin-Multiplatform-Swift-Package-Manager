@@ -1,5 +1,7 @@
 # Kotlin Multiplatform Plugin for use Swift Package Manager
 
+Publish in https://jitpack.io/com/github/NaUKMA-Programistich/Kotlin-Multiplatform-Swift-Package-Manager
+
 ### How to use
 * Dependencies for plugin ```TODO```
 * Connect id("kotlin-multiplatform-spm") in build.gradle.kts
