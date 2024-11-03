@@ -20,4 +20,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "spm"
 
+include(":plugin-deprecated")
 include(":plugin")
