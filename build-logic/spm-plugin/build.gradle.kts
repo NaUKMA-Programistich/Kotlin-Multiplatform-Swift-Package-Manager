@@ -6,7 +6,7 @@ plugins {
 
 gradlePlugin {
     plugins {
-        create("kmp-spm") {
+        create("kmp-spm-plugin") {
             id = "kotlin-multiplatform-spm"
             implementationClass = "com.programistich.spm.plugin.KotlinMultiplatformSPMPlugin"
         }

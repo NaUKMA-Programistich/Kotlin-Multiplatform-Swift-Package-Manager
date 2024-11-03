@@ -16,5 +16,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "plugin"
-include("spm")
+rootProject.name = "build-logic"
+include("spm-plugin")
