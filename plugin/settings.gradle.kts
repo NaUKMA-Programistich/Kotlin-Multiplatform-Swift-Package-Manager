@@ -1,5 +1,4 @@
 pluginManagement {
-    includeBuild("plugin")
     repositories {
         google()
         gradlePluginPortal()
@@ -17,5 +16,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Kotlin Multiplatform Swift Package"
-include(":example:shared")
+rootProject.name = "plugin"
+include("spm")
