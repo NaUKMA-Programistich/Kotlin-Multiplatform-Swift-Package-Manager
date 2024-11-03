@@ -17,5 +17,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Kotlin Multiplatform Swift Package"
+rootProject.name = "Kotlin Multiplatform SPM"
 include(":example:shared")
